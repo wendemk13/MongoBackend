@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Logout</title>
+</head>
+<body>
+  <h2>Logout</h2>
+  <button id="logoutBtn">Logout</button>
+  <div id="message"></div>
+
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/auth/logout', {
+          method: 'POST',
+          credentials: 'include',
+        });
+        const data = await res.json();
+        if (res.ok) {
+          document.getElementById('message').innerText = data.message;
+        } else {
+          document.getElementById('message').innerText = data.message || 'Logout failed';
+        }
+      } catch (err) {
+        document.getElementById('message').innerText = 'Network error';
+      }
+    });
+  </script>
+</body>
+</html>
